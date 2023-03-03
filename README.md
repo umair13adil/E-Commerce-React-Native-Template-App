@@ -11,6 +11,25 @@ A template project made with latest react-native components &amp; best practices
   Ecommerce template built with React Native (TypeScript)
 </h1>
 
+## 🚀 Installation
+
+```
+# clone repository
+git clone https://github.com/umair13adil/E-Commerce-React-Native-Template-App.git
+
+# install dependencies
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+yarn install
+npm i
+
+# install babel plugin: babel-plugin-module-resolver
+npm install --save-dev babel-plugin-module-resolver
+
+# run app
+npx react-native start
+
+```
+
 ## 📣 Design inspiration
 
 [TokoMegawa - E-Commerce](https://dribbble.com/shots/18733610-TokoMegawa-E-Commerce)
