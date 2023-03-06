@@ -1,4 +1,5 @@
-  import {createTheme} from '@shopify/restyle';
+import {createTheme} from '@shopify/restyle';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const palette = {
   purple: '#5A31F4',
@@ -10,10 +11,12 @@ const palette = {
 export const theme = createTheme({
   colors: {
     background: palette.white,
-    cardPrimaryBackground: palette.purple,
-    cardSecondaryBackground: palette.green,
-    title: palette.black,
+    cardPrimaryBackground: palette.white,
+    cardSecondaryBackground: palette.white,
+    title: palette.green,
     text: palette.white,
+    black: palette.black,
+    white: palette.white
   },
   spacing: {
     s: 8,
@@ -41,7 +44,7 @@ export const theme = createTheme({
   cardVariants: {
     defaults: {
       padding: 'm',
-      borderRadius: 10,
+      borderRadius: 15,
     },
     primary: {
       backgroundColor: 'cardPrimaryBackground',

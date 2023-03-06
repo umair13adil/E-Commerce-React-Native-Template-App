@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { theme, darkTheme, Theme } from '../globals/Theme';
 
 export const appStyles = StyleSheet.create({
     logo: {
@@ -6,9 +8,12 @@ export const appStyles = StyleSheet.create({
         height: 58,
     },
     image: {
-        aspectRatio: 1,
-        width: '100%',
-        flex: 1,
+        width: wp('45%'),
+        height:  hp('25%'),
+        borderRadius: 150 / 8,
+        overflow: "hidden",
+        borderWidth: 1,
+        borderColor: theme.colors.background
     },
     header: {
         flex: 1,
@@ -21,7 +26,7 @@ export const appStyles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        backgroundColor: '#DDDDDD',
+        backgroundColor: theme.colors.background,
         padding: 10,
         marginBottom: 10
     },
@@ -34,19 +39,19 @@ export const appStyles = StyleSheet.create({
         marginHorizontal: "auto",
         flexDirection: "row",
         flexWrap: "wrap",
-        width: '100%',
-        backgroundColor: '#000',
+        width: wp('50%'),
+        margin: 10
     },
     item: {
         flex: 1,
-        width: '100%',
+        width: wp('50%'),
         flexDirection: 'column',
-        height: 150,
+        height: hp('30%'),
         justifyContent: "space-between",
         alignItems: "stretch",
         padding: 5,
-        backgroundColor: '#55DAB8',
+        backgroundColor:theme.colors.background,
         borderWidth: 1.5,
-        borderColor: "#fff"
+        borderColor: theme.colors.cardPrimaryBackground
     }
 });
