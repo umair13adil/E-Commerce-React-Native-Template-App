@@ -1,5 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import { productsApi } from '../features/productsSlice'
+import { productsApi } from './queries/ProductsSlice'
 
 export const productStore = configureStore({
   reducer: {

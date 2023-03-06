@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { FlatList, Image, View } from "react-native";
-import { appStyles } from '../utils/AppStyles';
+import { appStyles } from '../globals/AppStyles';
 import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/base/dist/Avatar';
 import { NavigationContainer } from '@react-navigation/native';

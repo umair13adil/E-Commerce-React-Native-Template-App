@@ -1,12 +1,12 @@
 import React, { Component, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from "react-native";
-import { appStyles } from '../utils/AppStyles';
+import { appStyles } from '../globals/AppStyles';
 import { ListItem } from '@rneui/themed';
 import { Avatar } from '@rneui/base/dist/Avatar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useGetProductsQuery } from '../features/productsSlice';
+import { useGetProductsQuery } from '../store/product/queries/ProductsSlice';
 
 const HomePage = ({ navigation }) => {
     const { data, error, isLoading, isFetching, isSuccess } = useGetProductsQuery('');
