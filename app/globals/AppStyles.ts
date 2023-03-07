@@ -38,7 +38,7 @@ export const appStyles = StyleSheet.create({
     app: {
         marginHorizontal: "auto",
         flexDirection: "row",
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
         width: wp('50%'),
         margin: 10
     },
@@ -46,12 +46,13 @@ export const appStyles = StyleSheet.create({
         flex: 1,
         width: wp('50%'),
         flexDirection: 'column',
-        height: hp('30%'),
-        justifyContent: "space-between",
-        alignItems: "stretch",
+        height: hp('40%'),
+        justifyContent: "space-around",
+        alignItems: 'baseline',
         padding: 5,
         backgroundColor:theme.colors.background,
         borderWidth: 1.5,
-        borderColor: theme.colors.cardPrimaryBackground
+        borderColor: theme.colors.cardPrimaryBackground,
+        flexWrap:'nowrap'
     }
 });

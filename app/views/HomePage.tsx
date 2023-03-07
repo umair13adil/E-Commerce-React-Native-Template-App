@@ -1,4 +1,4 @@
-import React, { Component, useEffect,  useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList } from "react-native";
 import { appStyles } from '../globals/AppStyles';
@@ -18,7 +18,9 @@ import {
 import { theme, darkTheme, Theme } from '../globals/Theme';
 import ItemSeprator from '../components/ItemSeperator';
 import Chip from '../components/Chip';
+import {CardText, CardTextType} from '../components/CardText';
 import { useDeviceOrientation } from '@react-native-community/hooks';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
@@ -29,8 +31,18 @@ const Card = createRestyleComponent<
 
 const HomePage = ({ navigation }) => {
     var orientation = useDeviceOrientation()
+    const [colValue, setColValue] = useState(2)
 
     const { data, error, isLoading, isFetching, isSuccess } = useGetProductsQuery('');
+
+    useEffect(() => {
+        if (orientation === 'landscape') {
+            setColValue(3)
+        } else {
+            setColValue(2)
+        }
+    }, [orientation]);
+
     return (
         <Box backgroundColor="background" flex={1}>
             <View
@@ -52,17 +64,22 @@ const HomePage = ({ navigation }) => {
                 {isSuccess && <View>
                     <FlatList
                         data={data.products}
-                        ItemSeparatorComponent={ItemSeprator}
-                        numColumns={orientation === 'portrait' ? 2 : 3}
-                        key={(orientation ? 'landscape' : 'portrait')}
+                        //ItemSeparatorComponent={ItemSeprator}
+                        numColumns={colValue}
+                        key={(colValue)}
                         keyExtractor={(item, index) => '' + item.id}
                         renderItem={({ item }) => (
                             <Card style={appStyles.item}>
                                 <Pressable onPress={() => navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })}>
-                                    <View style={{ flexDirection: 'column' }}>
+                                    <View style={{ flexDirection: 'column'}}>
                                         <Image
                                             source={{ uri: item.thumbnail }} style={appStyles.image} />
-                                        <Chip text={item.title}/>
+                                        <Chip text={item.brand} />
+                                        <View style={{ flexDirection: 'row' , justifyContent:'space-evenly', alignItems:'stretch', marginLeft: wp('10%')}}>
+                                            <CardText text={item.title}  cardTextType={CardTextType.Caption}/>
+                                            <CardText text={item.price + "$"} cardTextType={CardTextType.Caption}/>
+                                        </View>
+                                        <CardText text={item.description} cardTextType={CardTextType.Description}/>
                                     </View>
                                 </Pressable>
                             </Card>

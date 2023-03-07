@@ -8,24 +8,29 @@ import {
     createText
 } from '@shopify/restyle';
 const Text = createText<Theme>();
+                                                      
+export enum CardTextType {
+    Caption,
+    Description
+}
 
-type ChipProps = {
+type CardTextProps = {
     text?: string;
+    cardTextType?: CardTextType
 };
 
-const Chip = (props: ChipProps) => {
+export const CardText = (props: CardTextProps) => {
     return <Text variant="body" style={{
-        height: 20,
+        height: wp('10%'),
         width: wp('30%'),
-        backgroundColor: theme.colors.black,
         marginEnd: 5,
+        marginStart: 5,
         fontSize: 12,
-        justifyContent:'center',
         paddingStart: 5,
-        position:'absolute', left: 5, top: 120, right: 0, bottom: 0
+        color: theme.colors.black,
+        fontWeight: props.cardTextType === CardTextType.Caption ? 'bold' : 'normal',
+        fontFamily: 'Cochin'
     }}>
         {props.text}
     </Text>;
 };
-
-export default Chip;
