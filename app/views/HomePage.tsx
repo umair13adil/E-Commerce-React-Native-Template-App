@@ -18,10 +18,12 @@ import {
 import { theme, darkTheme, Theme } from '../globals/Theme';
 import ItemSeprator from '../components/ItemSeperator';
 import Chip from '../components/Chip';
-import {CardText, CardTextType} from '../components/CardText';
+import { CardText, CardTextType } from '../components/CardText';
 import { useDeviceOrientation } from '@react-native-community/hooks';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { SearchBar } from '@rneui/themed';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Ionicons';
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
 const Card = createRestyleComponent<
@@ -32,7 +34,7 @@ const Card = createRestyleComponent<
 const HomePage = ({ navigation }) => {
     var orientation = useDeviceOrientation()
     const [colValue, setColValue] = useState(2)
-
+    const [search, setSearch] = useState("");
     const { data, error, isLoading, isFetching, isSuccess } = useGetProductsQuery('');
 
     useEffect(() => {
@@ -42,6 +44,12 @@ const HomePage = ({ navigation }) => {
             setColValue(2)
         }
     }, [orientation]);
+
+    const updateSearch = (search) => {
+        setSearch(search);
+    };
+
+    const searchIcon = <FontAwesome5 name={'comments'} solid />;
 
     return (
         <Box backgroundColor="background" flex={1}>
@@ -62,29 +70,42 @@ const HomePage = ({ navigation }) => {
                     <Text style={appStyles.baseText}>Loading products..</Text>
                 </View>}
                 {isSuccess && <View>
-                    <FlatList
-                        data={data.products}
-                        //ItemSeparatorComponent={ItemSeprator}
-                        numColumns={colValue}
-                        key={(colValue)}
-                        keyExtractor={(item, index) => '' + item.id}
-                        renderItem={({ item }) => (
-                            <Card style={appStyles.item}>
-                                <Pressable onPress={() => navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })}>
-                                    <View style={{ flexDirection: 'column'}}>
-                                        <Image
-                                            source={{ uri: item.thumbnail }} style={appStyles.image} />
-                                        <Chip text={item.brand} />
-                                        <View style={{ flexDirection: 'row' , justifyContent:'space-evenly', alignItems:'stretch', marginLeft: wp('10%')}}>
-                                            <CardText text={item.title}  cardTextType={CardTextType.Caption}/>
-                                            <CardText text={item.price + "$"} cardTextType={CardTextType.Caption}/>
+                    <View style={{ flexDirection: 'column' }}>
+                        <SearchBar
+                            lightTheme
+                            placeholderTextColor="#888"
+                            round
+                            placeholder="Type Here..."
+                            onChangeText={updateSearch}
+                            value={search}
+                            leftIcon={ <Icon name="ios-person" size={30} color="#4F8EF7" />}
+                            //searchIcon={ <Icon name="ios-person" size={30} color="#4F8EF7" />}
+                            searchIcon={ searchIcon}
+                        />
+                        <FlatList
+                            data={data.products}
+                            //ItemSeparatorComponent={ItemSeprator}
+                            numColumns={colValue}
+                            key={(colValue)}
+                            keyExtractor={(item, index) => '' + item.id}
+                            renderItem={({ item }) => (
+                                <Card style={appStyles.item}>
+                                    <Pressable onPress={() => navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })}>
+                                        <View style={{ flexDirection: 'column' }}>
+                                            <Image
+                                                source={{ uri: item.thumbnail }} style={appStyles.image} />
+                                            <Chip text={item.brand} />
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'stretch', marginLeft: wp('10%') }}>
+                                                <CardText text={item.title} cardTextType={CardTextType.Caption} />
+                                                <CardText text={item.price + "$"} cardTextType={CardTextType.Caption} />
+                                            </View>
+                                            <CardText text={item.description} cardTextType={CardTextType.Description} />
                                         </View>
-                                        <CardText text={item.description} cardTextType={CardTextType.Description}/>
-                                    </View>
-                                </Pressable>
-                            </Card>
-                        )}
-                    />
+                                    </Pressable>
+                                </Card>
+                            )}
+                        />
+                    </View>
                 </View>
                 }
                 {error && <Text style={appStyles.baseText}>Error</Text>}

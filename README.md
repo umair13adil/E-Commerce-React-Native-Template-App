@@ -25,6 +25,9 @@ npm i
 # install babel plugin: babel-plugin-module-resolver
 npm install --save-dev babel-plugin-module-resolver
 
+# run this command to link assets
+npx react-native-asset
+
 # run app
 npx react-native start
 

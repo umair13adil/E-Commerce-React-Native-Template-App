@@ -28,7 +28,7 @@ export default class HelloWorldApp extends Component {
           <Provider store={productStore}>
             <NavigationContainer>
               <Stack.Navigator>
-                <Stack.Screen name="Home" component={HomePage} />
+                <Stack.Screen name="Home" component={HomePage}  options={{headerShown: false}} />
                 <Stack.Screen name="Details" component={ProductDetailScreen} />
               </Stack.Navigator>
             </NavigationContainer>
