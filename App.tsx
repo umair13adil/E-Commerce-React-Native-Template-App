@@ -20,9 +20,12 @@ import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faCartShopping, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { setupProductRealm } from './app/globals/database/RealmHelper';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+setupProductRealm()
 
 function Home() {
   return (

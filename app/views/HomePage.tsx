@@ -20,6 +20,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { SearchBar } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { saveProduct } from '../globals/database/RealmHelper';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
@@ -104,12 +105,10 @@ const HomePage = ({ navigation }) => {
                             keyExtractor={(item, index) => '' + item.id}
                             renderItem={({ item }) => (
                                 <Card style={appStyles.item}>
-                                    <Pressable onPress={() => 
-                                    
-                                    navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })
-                                    //onShare("Check out this item..")
-                                
-                                }>
+                                    <Pressable onPress={() =>
+                                        navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })
+                                        //onShare("Check out this item..")
+                                    }>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Image
                                                 source={{ uri: item.thumbnail }} style={appStyles.image} />

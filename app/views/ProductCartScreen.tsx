@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Card } from '@rneui/themed';
 import { Text } from '@rneui/themed';
 import { CardFeaturedSubtitle } from '@rneui/base/dist/Card/Card.FeaturedSubtitle';
+import { getAllProducts } from '../globals/database/RealmHelper';
 
 const ProductCartScreen = ({ route, navigation }) => {
   
@@ -27,6 +28,7 @@ const ProductCartScreen = ({ route, navigation }) => {
                     marginBottom: 40,
                 }}
             >
+                <Text>{JSON.stringify(getAllProducts())}</Text>
                 <Card.Divider />
                 <View style={{ position: "relative", alignItems: "center" }}>
                    
