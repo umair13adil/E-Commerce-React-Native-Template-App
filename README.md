@@ -19,6 +19,7 @@ git clone https://github.com/umair13adil/E-Commerce-React-Native-Template-App.gi
 
 # install dependencies
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+npm i -g yarn
 yarn install
 npm i
 

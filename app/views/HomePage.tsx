@@ -1,14 +1,9 @@
 import React, { Component, useEffect, useState } from 'react';
-import { ActivityIndicator, Image, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, BackHandler, Image, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList } from "react-native";
 import { appStyles } from '../globals/AppStyles';
-import { ListItem } from '@rneui/themed';
-import { Avatar } from '@rneui/base/dist/Avatar';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useGetProductsQuery } from '../store/product/queries/ProductsSlice';
 import {
-    ThemeProvider,
     createBox,
     createText,
     createRestyleComponent,
@@ -18,12 +13,14 @@ import {
 import { theme, darkTheme, Theme } from '../globals/Theme';
 import ItemSeprator from '../components/ItemSeperator';
 import Chip from '../components/Chip';
+import { onShare } from '../components/ShareHelper';
 import { CardText, CardTextType } from '../components/CardText';
 import { useDeviceOrientation } from '@react-native-community/hooks';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SearchBar } from '@rneui/themed';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
 const Card = createRestyleComponent<
@@ -45,11 +42,30 @@ const HomePage = ({ navigation }) => {
         }
     }, [orientation]);
 
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert('Alert', 'Do you want to exit the app?', [
+                {
+                    text: 'Cancel',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                { text: 'YES', onPress: () => BackHandler.exitApp() },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
     const updateSearch = (search) => {
         setSearch(search);
     };
-
-    const searchIcon = <FontAwesome5 name={'comments'} solid />;
 
     return (
         <Box backgroundColor="background" flex={1}>
@@ -78,9 +94,7 @@ const HomePage = ({ navigation }) => {
                             placeholder="Type Here..."
                             onChangeText={updateSearch}
                             value={search}
-                            leftIcon={ <Icon name="ios-person" size={30} color="#4F8EF7" />}
-                            //searchIcon={ <Icon name="ios-person" size={30} color="#4F8EF7" />}
-                            searchIcon={ searchIcon}
+                            searchIcon={<FontAwesomeIcon icon={faMagnifyingGlass} size={25} color={theme.colors.black} />}
                         />
                         <FlatList
                             data={data.products}
@@ -90,7 +104,12 @@ const HomePage = ({ navigation }) => {
                             keyExtractor={(item, index) => '' + item.id}
                             renderItem={({ item }) => (
                                 <Card style={appStyles.item}>
-                                    <Pressable onPress={() => navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })}>
+                                    <Pressable onPress={() => 
+                                    
+                                    navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })
+                                    //onShare("Check out this item..")
+                                
+                                }>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Image
                                                 source={{ uri: item.thumbnail }} style={appStyles.image} />
