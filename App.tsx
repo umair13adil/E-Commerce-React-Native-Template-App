@@ -20,12 +20,9 @@ import { SafeAreaView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faCartShopping, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { setupProductRealm } from './app/globals/database/RealmHelper';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-setupProductRealm()
 
 function Home() {
   return (
@@ -62,9 +59,9 @@ export default class HelloWorldApp extends Component {
           <Provider store={productStore}>
             <NavigationContainer>
               <Stack.Navigator>
-                <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-                <Stack.Screen name="Details" component={ProductDetailScreen} />
-                <Stack.Screen name="Cart" component={ProductCartScreen} />
+                <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }} />
+                <Stack.Screen name="DetailScreen" component={ProductDetailScreen} />
+                <Stack.Screen name="CartScreen" component={ProductCartScreen} />
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>

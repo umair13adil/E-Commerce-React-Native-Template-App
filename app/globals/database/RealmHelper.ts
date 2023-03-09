@@ -16,7 +16,7 @@ function productMapper(product: ProductElement): Object {
 
 export const setupProductRealm = async () => {
     _productRealm = await Realm.open({
-        path: "realm-files/myrealm",
+        path: "database",
         schema: [ProductSchema],
     });
 
@@ -33,7 +33,7 @@ export const saveProduct = async (product: ProductElement) => {
     }
 };
 
-export const saveProducts = async (products: Array<ProductElement>) => {
+export const saveProductsInDatabase = async (products: Array<ProductElement>) => {
     try {
         _productRealm.write(() => {
             products.forEach(product => {
@@ -45,6 +45,4 @@ export const saveProducts = async (products: Array<ProductElement>) => {
     }
 };
 
-export let getAllProducts = () => {
-    return _productRealm.objects(DB_PRODUCT);
-}
+export const getAllProducts = () => _productRealm.objects(DB_PRODUCT);

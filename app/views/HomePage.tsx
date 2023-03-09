@@ -1,8 +1,8 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, BackHandler, Image, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList } from "react-native";
 import { appStyles } from '../globals/AppStyles';
-import { useGetProductsQuery } from '../store/product/queries/ProductsSlice';
+import { useGetProductsQuery, saveProducts, getProductsFromDatabase } from '../features/product/ProductsSlice';
 import {
     createBox,
     createText,
@@ -20,7 +20,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { SearchBar } from '@rneui/themed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { saveProduct } from '../globals/database/RealmHelper';
+import { useAppSelector, useAppDispatch } from '../globals/hooks';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
@@ -34,6 +34,22 @@ const HomePage = ({ navigation }) => {
     const [colValue, setColValue] = useState(2)
     const [search, setSearch] = useState("");
     const { data, error, isLoading, isFetching, isSuccess } = useGetProductsQuery('');
+
+    //Redux Hooks
+    const value = useAppSelector((state) => state.product.products);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (isSuccess) {
+            console.log(`HomePage: Data is Fetched: ${data.products?.length} products`);
+            dispatch(getProductsFromDatabase());
+            //dispatch(saveProducts(data.products!));
+        }
+    }, [isSuccess]);
+
+    useEffect(() => {
+        console.log(`HomePage: Data in Store: ${value?.length} products`);
+    }, [value]);
 
     useEffect(() => {
         if (orientation === 'landscape') {
@@ -106,7 +122,7 @@ const HomePage = ({ navigation }) => {
                             renderItem={({ item }) => (
                                 <Card style={appStyles.item}>
                                     <Pressable onPress={() =>
-                                        navigation.navigate('Details', { image: item.thumbnail, title: item.title, description: item.description })
+                                        navigation.navigate('DetailScreen', { image: item.thumbnail, title: item.title, description: item.description })
                                         //onShare("Check out this item..")
                                     }>
                                         <View style={{ flexDirection: 'column' }}>

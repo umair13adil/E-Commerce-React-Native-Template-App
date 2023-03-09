@@ -1,9 +1,11 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import { productsApi } from './queries/ProductsSlice'
+import { productsApi } from '../../features/product/ProductsSlice'
+import productReducer from '../../features/product/ProductsSlice'
 
 export const productStore = configureStore({
   reducer: {
     [productsApi.reducerPath]: productsApi.reducer,
+    product: productReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(productsApi.middleware)
 })
