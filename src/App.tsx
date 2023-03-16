@@ -27,11 +27,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Card from '@mui/material/Card';
+import Box from '@mui/material/Box/Box';
+import Button from '@mui/material/Button';
+import MenuIcon from '@mui/icons-material/Menu';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
@@ -73,18 +77,18 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-   toggle();
+    toggle();
   }, [setSelectedProduct]);
 
 
   function productListItem(p: ProductElement) {
-    return <Item>
+    return <Item sx={{ marginTop: 1 }}>
       <div key={p.id}>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar alt={p.title} src={p.images?.at(0)} />
           </ListItemAvatar>
-          <ListItemText
+          <ListItemText sx={{ maxWidth: '80%' }}
             primary={p.title}
             secondary={
               <React.Fragment>
@@ -98,7 +102,7 @@ function App() {
               </React.Fragment>
             }
           />
-          <Fab size="medium" color="primary" aria-label="add" onClick={() => setSelectedProduct(p)}>
+          <Fab sx={{ marginLeft: 5 }} size="medium" color="primary" aria-label="add" onClick={() => setSelectedProduct(p)}>
             <ShowDetailsIcon />
           </Fab>
         </ListItem>
@@ -107,11 +111,11 @@ function App() {
   }
 
   function detailCard(item?: ProductElement) {
-    return <Card sx={{ maxWidth: 450 }}>
+    return <Card sx={{ maxWidth: 450, marginTop: 1, marginLeft: 10 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {item?.title?.at(0)}
           </Avatar>
         }
         action={
@@ -120,13 +124,13 @@ function App() {
           </IconButton>
         }
         title={item?.title}
-        subheader={item?.description}
+        subheader={item?.brand}
       />
       <CardMedia
         component="img"
         height="194"
         image={item?.images?.at(0)}
-        alt="Paella dish"
+        alt=""
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
@@ -151,18 +155,18 @@ function App() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Brand:</Typography>
           <Typography paragraph>
             {item?.brand}
           </Typography>
           <Typography paragraph>
-            {item?.category}
+            Category: {item?.category}
           </Typography>
           <Typography paragraph>
-            {item?.price}
+            Price: {item?.price} $
           </Typography>
           <Typography>
-            {item?.stock}
+            In Stock:  {item?.stock} items
           </Typography>
         </CardContent>
       </Collapse>
@@ -170,19 +174,37 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Grid container spacing={0}>
+    <div className="App" >
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Shop Items
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Grid container spacing={2} sx={{ display: 'flex-inline', m: 2.0 }}>
         <Grid xs={6}>
-          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          <List sx={{ width: '100%' }}>
             <div>{products.map(p =>
               productListItem(p)
             )}</div>
           </List>
         </Grid>
         {isOpened && (
-          <Grid xs={6} spacing={2}>
+          <Grid xs={4} spacing={0} sx={{ width: '100%' }}>
             <div>
-            {detailCard(selectedProduct)}
+              {detailCard(selectedProduct)}
             </div>
           </Grid>
         )}
