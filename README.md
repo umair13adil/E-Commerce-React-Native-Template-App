@@ -11,6 +11,9 @@ A template project made with latest react-native components &amp; best practices
   Ecommerce template built with React Native (TypeScript)
 </h1>
 
+![Image1](images/image_1.png)
+![Image2](images/image_2.png)
+
 ## 🚀 Installation
 
 ```

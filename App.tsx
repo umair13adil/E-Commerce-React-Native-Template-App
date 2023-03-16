@@ -16,7 +16,7 @@ import {
 } from '@shopify/restyle';
 
 import { theme, darkTheme, Theme } from './app/globals/Theme';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faCartShopping, IconDefinition } from '@fortawesome/free-solid-svg-icons';
